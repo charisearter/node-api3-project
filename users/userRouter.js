@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
   // do your magic!
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', validateUserId, (req, res) => {
   // do your magic!
 });
 
@@ -19,26 +19,37 @@ router.get('/', (req, res) => {
   // do your magic!
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateUserId, (req, res) => {
   // do your magic!
 });
 
-router.get('/:id/posts', (req, res) => {
+router.get('/:id/posts', validateUserId, (req, res) => {
   // do your magic!
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId, (req, res) => {
   // do your magic!
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, (req, res) => {
   // do your magic!
 });
 
 //custom middleware
 
 function validateUserId(req, res, next) {
-  // do your magic!
+  Users.getById(req.params.id)
+  .then(resource => {
+    if(resource){
+      req.user = resource;
+      next();
+    }else {
+      res.status(400).json({ message: 'invalid user id' })
+    }
+  })
+  .catch(err => {
+    console.log(err)
+  })
 }
 
 function validateUser(req, res, next) {
