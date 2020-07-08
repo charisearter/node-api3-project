@@ -2,6 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
+//import user database
+//import post database
+const Users = require('./userDb');
+const Posts = require('../posts/postDb');
+
 router.post('/', (req, res) => {
   // do your magic!
 });
