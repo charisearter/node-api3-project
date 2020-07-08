@@ -2,12 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-//import user database
-//import post database
+//import user database and import post database
 const Users = require('./userDb');
 const Posts = require('../posts/postDb');
 
-router.post('/', (req, res) => {
+router.post('/', validateUser, (req, res) => {
   // do your magic!
 });
 
@@ -31,7 +30,7 @@ router.delete('/:id', validateUserId, (req, res) => {
   // do your magic!
 });
 
-router.put('/:id', validateUserId, (req, res) => {
+router.put('/:id', validateUserId, validateUser, (req, res) => {
   // do your magic!
 });
 
@@ -53,7 +52,12 @@ function validateUserId(req, res, next) {
 }
 
 function validateUser(req, res, next) {
-  // do your magic!
+  const body = req.body;
+  const name = req.body.name;
+
+  !body ? res.status(400).json({ message: "missing user data" }):
+  !name ? res.status(400).json({ message: "missing required name field" })
+  : next();
 }
 
 function validatePost(req, res, next) {
