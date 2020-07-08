@@ -7,7 +7,7 @@ const Users = require('./userDb');
 const Posts = require('../posts/postDb');
 
 router.post('/', validateUser, (req, res) => {
-  Users.insert({name: req.body.nam})
+  Users.insert({name: req.body.name})
   .then(result => {
     res.status(201).json(result)
   })
@@ -74,7 +74,15 @@ router.delete('/:id', validateUserId, (req, res) => {
 });
 
 router.put('/:id', validateUserId, validateUser, (req, res) => {
-  // do your magic!
+ const changes = req.body;
+  Users.update(req.params.id, changes)
+  .then(updated => {
+    res.status(200).json(updated)
+  })
+  .catch( error => {
+    console.log(error)
+    res.status(500).json({ message: "There was an error updating the user"})
+  })
 });
 
 //custom middleware
