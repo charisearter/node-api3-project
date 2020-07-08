@@ -5,11 +5,11 @@ server.use(express.json());
 
 //Posts Router
 const postRouter = require('./posts/postRouter');
-server.use('/api/posts', postRouter);
+server.use('/api/posts', logger, postRouter);
 
 //Users Router
 const userRouter = require('./users/userRouter'); 
-server.use('/api/users', userRouter);
+server.use('/api/users', logger, userRouter);
 
 
 server.get('/', (req, res) => {
