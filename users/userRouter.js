@@ -52,7 +52,14 @@ router.get('/:id', validateUserId, (req, res) => {
 });
 
 router.get('/:id/posts', validateUserId, (req, res) => {
-  // do your magic!
+  Users.getUserPosts(req.params.id)
+  .then(users => {
+    res.status(201).json(users)
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({ message: "Could not find user post" })
+  })
 });
 
 router.delete('/:id', validateUserId, (req, res) => {
