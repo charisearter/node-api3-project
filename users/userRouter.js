@@ -7,11 +7,26 @@ const Users = require('./userDb');
 const Posts = require('../posts/postDb');
 
 router.post('/', validateUser, (req, res) => {
-  // do your magic!
+  Users.insert({name: req.body.nam})
+  .then(result => {
+    res.status(201).json(result)
+  })
+  .catch( error => {
+    console.log(error)
+    res.status(500).json({ message: "User could not be created"})
+  })
 });
 
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
-  // do your magic!
+  const newPost = req.body;
+  Posts.insert({ ...newPost, user_id: req.user.id })
+  .then(post => {
+    res.status(201).json(post)
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({ message: "Post could not be added" })
+  })
 });
 
 router.get('/', (req, res) => {
