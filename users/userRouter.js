@@ -81,7 +81,7 @@ router.put('/:id', validateUserId, validateUser, (req, res) => {
   })
   .catch( error => {
     console.log(error)
-    res.status(500).json({ message: "There was an error updating the user"})
+    res.status(500).json({ message: " There was an error updating the user" })
   })
 });
 
